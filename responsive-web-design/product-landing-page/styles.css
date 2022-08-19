@@ -1,0 +1,68 @@
+html {
+    background-color: rgb(255, 247, 21);
+    font-family: 'Lato', sans-serif;
+}
+
+#gallery {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 0 4px;
+}
+
+#gallery img {
+  width: 25%;
+  height: 300px;
+  object-fit: cover;
+  margin-top: px;
+  padding: 0 4px;
+  border-radius: 10px;
+}
+
+img {
+    width: 25%;
+    object-fit: cover;
+    padding-right: 25vw;
+}
+
+#header {
+    position: fixed;
+    top: 0;
+    min-height: 75px;
+    padding: 0 20px;
+    display: flex;
+    background-color: rgb(255, 247, 21);
+}
+
+#about {
+    margin-top: 100px;
+}
+
+#buy, #gallery {
+    padding-top: 30vw;
+}
+
+#about, #buy {
+    text-align: center;
+}
+
+ul {
+    width: 35vw;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+@media (max-width: 600px) {
+    header {
+      flex-wrap: wrap;
+    }
+  }

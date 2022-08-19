@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1 id="title">Pokemon Survey</h1>
+    <p id="description">Answer questions about your favorite Pokemon</p>
+    <form action="" id="survey-form">
+        <fieldset>
+            <label id="name-label">Name: <input placeholder="Ash Ketchum" type="text" id="name" required></label>
+            <label id="email-label">email: <input placeholder="pokemaster@oak.net" type="email" id="email" required></label>
+            <label id="age-label">Age: <input placeholder="10" type="number" id="age" min="7" max="120" required></label>
+        </fieldset>
+        <fieldset>
+            <label id="dropdown-label">The Energy type of my deck is: 
+                <select name="energy-type" id="dropdown">
+                    <option value="">(select one)</option>
+                    <option value="fire">Fire</option>
+                    <option value="water">Water</option>
+                    <option value="grass">Grass</option>
+                    <option value="lightening">Lightening</option>
+                    <option value="psychic">Psychic</option>
+                    <option value="fighting">Fighting</option>
+                    <option value="darkness">Darkness</option>
+                    <option value="metal">Metal</option>
+                    <option value="fairy">Fairy</option>
+                    <option value="dragon">Dragon</option>
+                    <option value="colorless">Colorless</option>
+                </select>
+            </label>
+            <fieldset>
+                <legend>Choose your level</legend>
+                <label class="inline">Rookie <input class="inline"  name="level" type="radio"></label>
+                <label class="inline">Experienced <input class="inline" name="level" type="radio"></label>
+                <label class="inline">Master <input class="inline" name="level" type="radio"></label>
+            </fieldset>
+            <fieldset>
+                <legend>Which Pokemon are your favorite?</legend>
+                <label>Pikachu<input value="pikachu" name="pokemon" type="checkbox"></label>
+                <label>Eevee<input value="eevee" name="pokemon" type="checkbox"></label>
+                <label>Cinderace<input value="cinderace" name="pokemon" type="checkbox"></label>
+                <label>Boltund<input value="boltund" name="pokemon" type="checkbox"></label>
+                <label>Shinx<input value="shinx" name="pokemon" type="checkbox"></label>
+            </fieldset>
+        </fieldset>
+        <fieldset>
+            <label>Why do you like Pokemon?
+                <textarea name="about"cols="30" rows="7" placeholder="I like Pokemon because they are cute and..."></textarea>
+            </label>
+        </fieldset>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

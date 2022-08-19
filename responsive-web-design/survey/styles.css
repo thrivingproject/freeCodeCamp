@@ -1,0 +1,60 @@
+label {
+    display: block;
+    margin: 0.5rem 0;
+  }
+
+legend {
+    background-color: yellow;
+    color: black;
+}
+
+fieldset {
+    background-color: blue;
+    color: white;
+}
+
+.inline {
+    display: inline;
+}
+
+h1 {
+    color: red;
+    margin: 0;
+}
+
+p {
+    font-style: italic;
+    margin: 0;
+}
+
+h1, p {
+    text-align: center;
+}
+
+body {
+    background-image: url(https://i.redd.it/njzlib6ikxe31.jpg);
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+form {
+    margin: 0 auto;
+    max-width: 500px;
+    min-width: 300px;
+    width: 80vw;
+}
+
+textarea {
+    width: 100%;
+    margin: 10px 0 0 0;
+}
+
+input[type="submit"] {
+    display: block;
+    width: 60%;
+    margin: 1em auto;
+    height: 2em;
+    font-size: 1.1rem;
+    background-color: yellow;
+    border-color: white;
+    min-width: 300px;
+  }
