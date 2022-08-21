@@ -11,28 +11,28 @@ MAIN() {
     if [[ $1 =~ ^[0-9]+$ ]]
     then
       # Check if atomic number exists
-      ATOMIC_NUM_RESULT=$($PSQL "SELECT * from elements WHERE atomic_number = $1")
-      if [[ -z $ATOMIC_NUM_RESULT ]]
+      ATOMIC_NUM=$($PSQL "SELECT atomic_number from elements WHERE atomic_number = $1")
+      if [[ -z $ATOMIC_NUM ]]
       then
         DNE
       else
-        DISPLAY_INFO
+        DISPLAY_INFO $ATOMIC_NUM
       fi
     else
       # Check if symbol exists
-      SYMBOL_RESULT=$($PSQL "SELECT * from elements WHERE symbol = '$1'")
-      if [[ -z $SYMBOL_RESULT ]]
+      ATOMIC_NUM=$($PSQL "SELECT atomic_number from elements WHERE symbol = '$1'")
+      if [[ -z $ATOMIC_NUM ]]
       then
         # check if element name exists
-        NAME_RESULT=$($PSQL "SELECT * from elements WHERE name = '$1'")
-        if [[ -z $NAME_RESULT ]]
+        ATOMIC_NUM=$($PSQL "SELECT atomic_number from elements WHERE name = '$1'")
+        if [[ -z $ATOMIC_NUM ]]
         then
           DNE
         else
-          DISPLAY_INFO
+          DISPLAY_INFO $ATOMIC_NUM
         fi
       else
-        DISPLAY_INFO
+        DISPLAY_INFO $ATOMIC_NUM
       fi
     fi
   fi
@@ -43,7 +43,14 @@ DNE() {
 }
 
 DISPLAY_INFO() {
-  echo "element exists"
+  ELEMENT_INFO=$($PSQL "SELECT atomic_number, name, symbol, type, atomic_mass, melting_point_celsius, boiling_point_celsius
+                        FROM elements
+                        JOIN properties
+                        USING(atomic_number)
+                        JOIN types
+                        USING(type_id)
+                        WHERE atomic_number = $1")
+  echo $ELEMENT_INFO | read NUM BAR NAME BAR SYMBOL BAR TYPE BAR MASS BAR MELT BAR BOIL
 }
 
 MAIN $1
