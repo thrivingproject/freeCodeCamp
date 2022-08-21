@@ -50,7 +50,10 @@ DISPLAY_INFO() {
                         JOIN types
                         USING(type_id)
                         WHERE atomic_number = $1")
-  echo $ELEMENT_INFO | read NUM BAR NAME BAR SYMBOL BAR TYPE BAR MASS BAR MELT BAR BOIL
+  echo $ELEMENT_INFO | while read NUM BAR NAME BAR SYMBOL BAR TYPE BAR MASS BAR MELT BAR BOIL
+  do
+    echo "The element with atomic number $NUM is $NAME ($SYMBOL). It's a $TYPE, with a mass of $MASS amu. $NAME has a melting point of $MELT celsius and a boiling point of $BOIL celsius."
+  done
 }
 
 MAIN $1
