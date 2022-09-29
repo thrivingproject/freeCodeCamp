@@ -4,24 +4,84 @@ import './site.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+class Button extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  // componentDidMount() {
+  //   document.addEventListener('keydown', this.handleKeyPress);
+  // }
+
+  // componentWillUnmount() {
+  //   document.removeEventListener('keydown', this.handleKeyPress);
+  // }
+
+  handleKeyPress = () => {
+    this.props.clicked(this.props.label)
+  }
+
+  render() {
+    return (
+      <button onClick={this.handleKeyPress} id={this.props.id}>{this.props.label}</button>
+    )
+  }
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      display: ''
+    }
   }
-  render() {
-    return(
-      <div>
 
+  updateDisplay = (label) => {
+    this.setState((state, props) => {
+      return {display: state.display.concat(label)}
+    })
+  }
+
+  clearDisplay = () => {
+    this.setState({
+      display: ''
+    })
+  }
+
+  calculate = () => {
+
+  }
+
+  render() {
+    return (
+      <div id='calculator'>
+        <div id="display"><h1>{this.state.display}</h1></div>
+        <Button clicked={this.updateDisplay} label={0} id='zero' />
+        <Button clicked={this.updateDisplay} label={1} id='one' />
+        <Button clicked={this.updateDisplay} label={2} id='two' />
+        <Button clicked={this.updateDisplay} label={3} id='three' />
+        <Button clicked={this.updateDisplay} label={4} id='four' />
+        <Button clicked={this.updateDisplay} label={5} id='five' />
+        <Button clicked={this.updateDisplay} label={6} id='six' />
+        <Button clicked={this.updateDisplay} label={7} id='seven' />
+        <Button clicked={this.updateDisplay} label={8} id='eight' />
+        <Button clicked={this.updateDisplay} label={9} id='nine' />
+        <Button clicked={this.updateDisplay} label='+' id='add' />
+        <Button clicked={this.updateDisplay} label='-' id='subtract' />
+        <Button clicked={this.updateDisplay} label='/' id='divide' />
+        <Button clicked={this.updateDisplay} label='*' id='multiply' />
+        <Button clicked={this.updateDisplay} label='.' id='decimal' />
+        <Button clicked={this.clearDisplay} label='clear' id='clear' />
+        <button clicked={this.calculate} id="equals">=</button>
       </div>
     )
   }
-  
+
 }
 
 root.render(
   <React.StrictMode>
-
+    <App />
   </React.StrictMode>
 );
 
