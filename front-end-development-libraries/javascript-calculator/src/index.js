@@ -14,44 +14,34 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      display: '0'
+      display: '0',
+      evaluated: false
     }
   }
 
   handleClick = (e) => {
-    const thisPress = e.target.value
-    const display = this.state.display
-    const prevPress = display.charAt(display.length - 1)
-    const prevExpression = display.slice(0, display.length - 1)
+    const value = e.target.value
+    const { display, evaluated } = this.state
+    const lastPress = display.charAt(display.length - 1)
     const index = display.search(/[*/+]-+[*/+]/)
-
-    if (index !== -1) {
-      this.setState((state) => ({
-        display: state.display.slice(0, index) + prevPress
-      }))
-    }
+    console.log(index, lastPress)
 
     // Check if decimal already present
-    if (display.includes('.') && thisPress === '.') {
+    if (display.includes('.') && value === '.') {
       let checkSlice = display.slice(display.lastIndexOf('.'))
       if (checkSlice.search(/[*/+-]/g) == -1) {
         return
       }
     }
 
-    // Check for consecutive operators
-    if (operators.includes(prevPress) && operators.includes(thisPress)) {
-      if (prevPress !== thisPress) {
-        this.setState({
-          display: prevExpression + thisPress
-        })
-      }
-    // Remove leading zero
-    } else {
-      this.setState({
-        display: display === '0' ? thisPress : display + thisPress 
-      })
-    }
+    this.setState({
+      display: display === '0' || evaluated
+        ? value
+        : index!== -1
+          ? display.slice(0, index) + lastPress + value
+          : display + value,
+      evaluated: false
+    })
   }
 
   clearDisplay = () => {
@@ -68,7 +58,8 @@ class App extends React.Component {
     }
     let evaluation = Math.round(1000000 * eval(expression)) / 1000000
     this.setState({
-      display: evaluation.toString()
+      display: evaluation.toString(),
+      evaluated: true
     })
   }
 
