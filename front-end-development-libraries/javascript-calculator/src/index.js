@@ -6,7 +6,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const Button = (props) => {
   return (
-    <button onClick={() => props.clicked(props.label)} id={props.id}>{props.label}</button>
+    <button value={props.value} onClick={props.clicked} id={props.id}>{props.value}</button>
   )
 }
 
@@ -14,66 +14,88 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      display: '',
-      lastClicked: ''
+      display: '0'
     }
   }
 
-  updateDisplay = (label) => {
+  handleClick = (e) => {
+    const thisPress = e.target.value
     const display = this.state.display
-    const prevVal = display.charAt(display.length - 1)
+    const prevPress = display.charAt(display.length - 1)
+    const prevExpression = display.slice(0, display.length - 1)
+    const index = display.search(/[*/+]-+[*/+]/)
 
-    // Check if decimal already present
-    if (display.includes('.') && label === '.') {
-      return
+    if (index !== -1) {
+      this.setState((state) => ({
+        display: state.display.slice(0, index) + prevPress
+      }))
     }
 
-    // Check for consecutive operators
-    if (operators.includes(prevVal) && operators.includes(label)) {
-      if (prevVal !== label) {
-
+    // Check if decimal already present
+    if (display.includes('.') && thisPress === '.') {
+      let checkSlice = display.slice(display.lastIndexOf('.'))
+      if (checkSlice.search(/[*/+-]/g) == -1) {
+        return
       }
     }
 
-    this.setState((state, props) => ({
-      display: state.display + label,
-    }))
+    // Check for consecutive operators
+    if (operators.includes(prevPress) && operators.includes(thisPress)) {
+      if (prevPress !== thisPress) {
+        this.setState({
+          display: prevExpression + thisPress
+        })
+      }
+    // Remove leading zero
+    } else {
+      this.setState({
+        display: display === '0' ? thisPress : display + thisPress 
+      })
+    }
   }
 
   clearDisplay = () => {
     this.setState({
-      display: ''
+      display: '0'
     })
   }
 
   calculate = () => {
-
+    let expression = this.state.display.replace('--', '+')
+    let last = expression[expression.length - 1]
+    if (['+', '-', '*', '/'].includes(last)) {
+      expression += '0'
+    }
+    let evaluation = Math.round(1000000 * eval(expression)) / 1000000
+    this.setState({
+      display: evaluation.toString()
+    })
   }
 
   render() {
     return (
       <div id='calculator'>
-        <div id="display"><h1>{this.state.display}</h1></div>
+        <div id="display">{this.state.display}</div>
 
-        <Button clicked={this.updateDisplay} label={0} id='zero' />
-        <Button clicked={this.updateDisplay} label={1} id='one' />
-        <Button clicked={this.updateDisplay} label={2} id='two' />
-        <Button clicked={this.updateDisplay} label={3} id='three' />
-        <Button clicked={this.updateDisplay} label={4} id='four' />
-        <Button clicked={this.updateDisplay} label={5} id='five' />
-        <Button clicked={this.updateDisplay} label={6} id='six' />
-        <Button clicked={this.updateDisplay} label={7} id='seven' />
-        <Button clicked={this.updateDisplay} label={8} id='eight' />
-        <Button clicked={this.updateDisplay} label={9} id='nine' />
+        <Button clicked={this.handleClick} value={0} id='zero' />
+        <Button clicked={this.handleClick} value={1} id='one' />
+        <Button clicked={this.handleClick} value={2} id='two' />
+        <Button clicked={this.handleClick} value={3} id='three' />
+        <Button clicked={this.handleClick} value={4} id='four' />
+        <Button clicked={this.handleClick} value={5} id='five' />
+        <Button clicked={this.handleClick} value={6} id='six' />
+        <Button clicked={this.handleClick} value={7} id='seven' />
+        <Button clicked={this.handleClick} value={8} id='eight' />
+        <Button clicked={this.handleClick} value={9} id='nine' />
 
-        <Button clicked={this.updateDisplay} label='+' id='add' />
-        <Button clicked={this.updateDisplay} label='-' id='subtract' />
-        <Button clicked={this.updateDisplay} label='/' id='divide' />
-        <Button clicked={this.updateDisplay} label='*' id='multiply' />
+        <Button clicked={this.handleClick} value='+' id='add' />
+        <Button clicked={this.handleClick} value='-' id='subtract' />
+        <Button clicked={this.handleClick} value='/' id='divide' />
+        <Button clicked={this.handleClick} value='*' id='multiply' />
 
-        <Button clicked={this.updateDisplay} label='.' id='decimal' />
-        <Button clicked={this.clearDisplay} label='clear' id='clear' />
-        <button clicked={this.calculate} id="equals">=</button>
+        <Button clicked={this.handleClick} value='.' id='decimal' />
+        <Button clicked={this.clearDisplay} value='clear' id='clear' />
+        <button onClick={this.calculate} id="equals">=</button>
       </div>
     )
   }

@@ -10,13 +10,13 @@ button {
     width: 100%;
     height: 100%;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
-    background-image: linear-gradient(135deg, #ff29bf, #f480d1);
+    background-image: linear-gradient(50deg, #cc7841, #e52b5d);
     border: none;
 }
 
 button:active {
     box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.4);
-    background-image: linear-gradient(135deg, #3eff29, #80f484);
+    background-image: linear-gradient(50deg, #57dbcb, #3b6af7);
 }
 
 #calculator {
@@ -32,6 +32,7 @@ button:active {
     width: 66vw;
     max-width: 18rem;
     height: 50vh;
+    min-height: 27rem;
     grid-template-areas:
         "sc sc sc sc"
         "ac ac div mult"
@@ -64,10 +65,10 @@ button:active {
     background-color: rgb(193, 193, 210);
     min-height: 3rem;
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
-}
-#display h1 {
+    padding-right: .5rem;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     margin: 0;
+    font-size: 1.5rem;
 }
