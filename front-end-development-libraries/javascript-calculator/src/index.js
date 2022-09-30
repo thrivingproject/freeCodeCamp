@@ -23,8 +23,7 @@ class App extends React.Component {
     const value = e.target.value
     const { display, evaluated } = this.state
     const lastPress = display.charAt(display.length - 1)
-    const index = display.search(/[*/+]-+[*/+]/)
-    console.log(index, lastPress)
+    const index = display.search(/[*/+]-*[*/+]/)
 
     // Check if decimal already present
     if (display.includes('.') && value === '.') {
@@ -35,9 +34,9 @@ class App extends React.Component {
     }
 
     this.setState({
-      display: display === '0' || evaluated
+      display: display === '0' || evaluated && !operators.includes(value)
         ? value
-        : index!== -1
+        : index !== -1
           ? display.slice(0, index) + lastPress + value
           : display + value,
       evaluated: false
