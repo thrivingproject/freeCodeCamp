@@ -2,10 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './site.css'
 
+const LengthPanel = (props) => {
+  return (
+    <div className='flex length-controls-panel'>
+      <LengthControl
+        len={props.sLen}
+        type='Session'
+        onClick={props.sClick}
+      />
+      <LengthControl
+        len={props.bLen}
+        type='Break'
+        onClick={props.bClick}
+      />
+    </div>
+  )
+}
 const LengthControl = (props) => {
   const type = props.type.toLowerCase()
-
-  return(
+  return (
     <div>
       <h2 id={`${type}-label`}>{props.type} Length</h2>
       <div className='flex length-controls'>
@@ -25,7 +40,6 @@ class App extends React.Component {
       sessionLen: 25
     }
   }
-
   setBreakLen = (e) => {
     const operator = e.target.value
     this.setState(state => ({
@@ -33,37 +47,32 @@ class App extends React.Component {
         ? state.breakLen + 1
         : state.breakLen == 0
           ? 0
-          : state.breakLen - 1 
+          : state.breakLen - 1
     }))
-  
+
   }
   setSessionLen = (e) => {
     const operator = e.target.value
     this.setState(state => ({
       sessionLen: operator === '+'
-      ? state.sessionLen + 1
-      : state.sessionLen == 0
-        ? 0
-        : state.sessionLen - 1 
+        ? state.sessionLen + 1
+        : state.sessionLen == 0
+          ? 0
+          : state.sessionLen - 1
     }))
   }
-  
+
   render() {
     return (
       <div className='flex' id='app'>
         <h1>Timer</h1>
-        <div className='flex length-controls-panel'>
-          <LengthControl 
-            len={this.state.sessionLen}
-            type='Session'
-            onClick={this.setSessionLen}
-          />
-          <LengthControl 
-            len={this.state.breakLen}
-            type='Break'
-            onClick={this.setBreakLen}
-          />
-        </div>
+        <LengthPanel
+          bClick={this.setBreakLen}
+          sClick={this.setSessionLen}
+          sLen={this.state.sessionLen}
+          bLen={this.state.breakLen}
+        />
+        {/* <Session /> */}
       </div>
     )
   }
@@ -72,5 +81,5 @@ class App extends React.Component {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-    <App />
+  <App />
 );
