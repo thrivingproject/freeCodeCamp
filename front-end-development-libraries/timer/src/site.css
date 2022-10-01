@@ -1,11 +1,40 @@
-body { 
+* {
     margin: 0;
+    padding: 0;
+}
+html {
+    box-sizing: border-box;
+    font-size: 75%;  /* 1rem = 10pt, 1.6rem = 16pt, 7.2rem = 72pt */
+    scroll-behavior: smooth;
+}
+.flex {
+    display: flex;
+    /* border: solid black 1px; */
 }
 
-#root {
-    display: flex;
-    flex-flow: row wrap;
+#app {
+    flex-flow: column wrap;
     justify-content: center;
     height: 100vh;
     align-items: center;
+    row-gap: 1rem;
 }
+
+.length-controls-panel {
+    column-gap: 2.5rem;
+}
+
+.length-controls {
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+button {
+    width: 2rem;
+    height: 2rem;
+    background-color: grey;
+    color: white;
+    border: none;
+}
+
