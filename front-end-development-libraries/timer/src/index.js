@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom/client';
 import './site.css'
 
 const LengthControl = (props) => {
+  const type = props.type.toLowerCase()
+
   return(
     <div>
-      <h2>{props.type} Length</h2>
+      <h2 id={`${type}-label`}>{props.type} Length</h2>
       <div className='flex length-controls'>
-        <button onClick={props.onClick} value='+'>+</button>
-        <h3>{props.len}</h3>
-        <button onClick={props.onClick} value='-'>-</button>
+        <button id={`${type}-increment`} onClick={props.onClick} value='+'>+</button>
+        <h3 id={`${type}-length`}>{props.len}</h3>
+        <button id={`${type}-decrement`} onClick={props.onClick} value='-'>-</button>
       </div>
     </div>
   )
@@ -27,14 +29,22 @@ class App extends React.Component {
   setBreakLen = (e) => {
     const operator = e.target.value
     this.setState(state => ({
-      breakLen: operator === '+' ? state.breakLen + 1 : state.breakLen - 1 
+      breakLen: operator === '+'
+        ? state.breakLen + 1
+        : state.breakLen == 0
+          ? 0
+          : state.breakLen - 1 
     }))
   
   }
   setSessionLen = (e) => {
     const operator = e.target.value
     this.setState(state => ({
-      sessionLen: operator === '+' ? state.sessionLen + 1 : state.sessionLen - 1 
+      sessionLen: operator === '+'
+      ? state.sessionLen + 1
+      : state.sessionLen == 0
+        ? 0
+        : state.sessionLen - 1 
     }))
   }
   
@@ -44,14 +54,14 @@ class App extends React.Component {
         <h1>Timer</h1>
         <div className='flex length-controls-panel'>
           <LengthControl 
-            len={this.state.breakLen}
-            type='Break'
-            onClick={this.setBreakLen}
-          />
-          <LengthControl 
             len={this.state.sessionLen}
             type='Session'
             onClick={this.setSessionLen}
+          />
+          <LengthControl 
+            len={this.state.breakLen}
+            type='Break'
+            onClick={this.setBreakLen}
           />
         </div>
       </div>

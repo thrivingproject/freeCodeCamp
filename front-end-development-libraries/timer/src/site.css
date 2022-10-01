@@ -4,7 +4,6 @@
 }
 html {
     box-sizing: border-box;
-    font-size: 75%;  /* 1rem = 10pt, 1.6rem = 16pt, 7.2rem = 72pt */
     scroll-behavior: smooth;
 }
 .flex {
