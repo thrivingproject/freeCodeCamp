@@ -5,12 +5,12 @@ import './site.css'
 const LengthPanel = (props) => {
   return (
     <div className='flex length-controls-panel'>
-      <LengthControl
+      <LengthController
         len={props.sLen}
         type='Session'
         onClick={props.sClick}
       />
-      <LengthControl
+      <LengthController
         len={props.bLen}
         type='Break'
         onClick={props.bClick}
@@ -18,7 +18,7 @@ const LengthPanel = (props) => {
     </div>
   )
 }
-const LengthControl = (props) => {
+const LengthController = (props) => {
   const type = props.type.toLowerCase()
   return (
     <div>
@@ -31,13 +31,26 @@ const LengthControl = (props) => {
     </div>
   )
 }
+const Session = (props) => {
+  return (
+    <div id='session' className='flex'>
+      <h3 id='timer-label'>Session</h3>
+      <p id='time-left'>25{props.timeLeft}</p>
+      <button>
+        <i className="fa fa-play" />
+        <i className="fa fa-pause" />
+      </button>
+    </div>
+  )
+}
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       breakLen: 5,
-      sessionLen: 25
+      sessionLen: 25,
+      timeLeft: 1500
     }
   }
   setBreakLen = (e) => {
@@ -45,7 +58,7 @@ class App extends React.Component {
     this.setState(state => ({
       breakLen: operator === '+'
         ? state.breakLen + 1
-        : state.breakLen == 0
+        : state.breakLen === 0
           ? 0
           : state.breakLen - 1
     }))
@@ -56,23 +69,24 @@ class App extends React.Component {
     this.setState(state => ({
       sessionLen: operator === '+'
         ? state.sessionLen + 1
-        : state.sessionLen == 0
+        : state.sessionLen === 0
           ? 0
           : state.sessionLen - 1
     }))
   }
+  clock = () => {
 
+  }
   render() {
     return (
       <div className='flex' id='app'>
-        <h1>Timer</h1>
         <LengthPanel
           bClick={this.setBreakLen}
           sClick={this.setSessionLen}
           sLen={this.state.sessionLen}
           bLen={this.state.breakLen}
         />
-        {/* <Session /> */}
+        <Session timeLeft={this.clock} />
       </div>
     )
   }

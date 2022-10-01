@@ -8,9 +8,8 @@ html {
 }
 .flex {
     display: flex;
-    border: solid black 1px;
+    /* border: solid black 1px; */
 }
-
 #app {
     flex-flow: column wrap;
     justify-content: center;
@@ -18,17 +17,14 @@ html {
     align-items: center;
     row-gap: 1rem;
 }
-
 .length-controls-panel {
     column-gap: 2.5rem;
 }
-
 .length-controls {
     justify-content: space-evenly;
     align-items: center;
     margin-top: 1rem;
 }
-
 button {
     width: 2rem;
     height: 2rem;
@@ -36,4 +32,14 @@ button {
     color: white;
     border: none;
 }
-
+button:active {
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.4);
+}
+#session {
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+}
+#time-left {
+    font-size: 7rem;
+}
