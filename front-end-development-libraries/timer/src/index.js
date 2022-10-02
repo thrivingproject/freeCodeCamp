@@ -55,9 +55,9 @@ class App extends React.Component {
     this.state = {
       breakLen: 5,
       sessionLen: 25,
-      timeLeft: 5,
+      timeLeft: 1500,
       countdown: false,
-      breakSession: 'Session'
+      stage: 'Session'
     }
   }
   decrement = () => {
@@ -66,9 +66,14 @@ class App extends React.Component {
         timeLeft: state.timeLeft -= 1
       }))
     } else {
+      this.playSound()
       this.setState(state => ({
-        timeLeft: state.breakLen * 60,
-        breakSession: 'Break'
+        timeLeft: state.stage === 'Session'
+          ? state.breakLen * 60
+          : state.sessionLen * 60,
+        stage: state.stage === 'Session'
+          ? 'Break'
+          : 'Session'
       }))
     }
   }
@@ -78,6 +83,11 @@ class App extends React.Component {
     if (seconds < 10) seconds = '0' + seconds
     if (minutes < 10) minutes = '0' + minutes
     return minutes + ':' + seconds
+  }
+  playSound = () => {
+    const sound = document.getElementById('beep')
+    sound.currentTime = 0;
+    sound.play();
   }
   setBreakLen = (e) => {
     const operator = e.target.value
@@ -130,9 +140,12 @@ class App extends React.Component {
       sessionLen: 25,
       timeLeft: 1500,
       countdown: false,
-      breakSession: 'Session'
+      stage: 'Session'
     })
     clearInterval(this.state.intervalID)
+    const sound = document.getElementById('beep')
+    sound.currentTime = 0;
+    sound.pause();
   }
 
   render() {
@@ -148,7 +161,12 @@ class App extends React.Component {
           timeLeft={this.format()}
           startPause={this.startStop}
           reset={this.reset}
-          stage={this.state.breakSession}
+          stage={this.state.stage}
+        />
+        <audio
+          id="beep"
+          preload="auto"
+          src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav"
         />
       </div>
     )
