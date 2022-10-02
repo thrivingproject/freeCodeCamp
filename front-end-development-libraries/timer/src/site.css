@@ -11,7 +11,7 @@ html {
     /* border: solid black 1px; */
 }
 #app {
-    flex-flow: column wrap;
+    flex-flow: column;
     justify-content: center;
     height: 100vh;
     align-items: center;
@@ -31,15 +31,24 @@ button {
     background-color: grey;
     color: white;
     border: none;
+    border-radius: 5px;
 }
 button:active {
-    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0px 0px 7px rgba(0, 0, 0, 0.7);
 }
-#session {
+#timer-panel {
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
+    margin-top: 1.5rem;
+    row-gap: 1rem;
 }
 #time-left {
     font-size: 7rem;
+}
+#start-stop-reset {
+    column-gap: 1rem;
+}
+#timer-label {
+    font-style: italic;
 }

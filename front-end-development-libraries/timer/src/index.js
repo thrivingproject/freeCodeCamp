@@ -31,15 +31,20 @@ const LengthController = (props) => {
     </div>
   )
 }
-const Session = (props) => {
+const TimerPanel = (props) => {
   return (
-    <div id='session' className='flex'>
-      <h3 id='timer-label'>Session</h3>
-      <p id='time-left'>25{props.timeLeft}</p>
-      <button>
-        <i className="fa fa-play" />
-        <i className="fa fa-pause" />
-      </button>
+    <div id='timer-panel' className='flex'>
+      <h2 id='timer-label'>{props.stage}</h2>
+      <p id='time-left'>{props.timeLeft}</p>
+      <div id='start-stop-reset' className='flex'>
+        <button id='start_stop' onClick={props.startPause}>
+          <i className="fa fa-play" />
+          <i className="fa fa-pause" />
+        </button>
+        <button onClick={props.reset} id='reset'>
+          <i className='fa fa-refresh' />
+        </button>
+      </div>
     </div>
   )
 }
@@ -50,33 +55,86 @@ class App extends React.Component {
     this.state = {
       breakLen: 5,
       sessionLen: 25,
-      timeLeft: 1500
+      timeLeft: 5,
+      countdown: false,
+      breakSession: 'Session'
     }
+  }
+  decrement = () => {
+    if (this.state.timeLeft) {
+      this.setState(state => ({
+        timeLeft: state.timeLeft -= 1
+      }))
+    } else {
+      this.setState(state => ({
+        timeLeft: state.breakLen * 60,
+        breakSession: 'Break'
+      }))
+    }
+  }
+  format = () => {
+    let minutes = Math.floor(this.state.timeLeft / 60)
+    let seconds = this.state.timeLeft - minutes * 60
+    if (seconds < 10) seconds = '0' + seconds
+    if (minutes < 10) minutes = '0' + minutes
+    return minutes + ':' + seconds
   }
   setBreakLen = (e) => {
     const operator = e.target.value
-    this.setState(state => ({
-      breakLen: operator === '+'
-        ? state.breakLen + 1
-        : state.breakLen === 0
-          ? 0
-          : state.breakLen - 1
-    }))
+    const len = this.state.breakLen
 
+    this.setState({
+      breakLen: operator === '+'
+        ? len === 60
+          ? 60
+          : len + 1
+        : len === 1
+          ? 1
+          : len - 1
+    })
   }
   setSessionLen = (e) => {
     const operator = e.target.value
-    this.setState(state => ({
+    const len = this.state.sessionLen
+
+    this.setState({
       sessionLen: operator === '+'
-        ? state.sessionLen + 1
-        : state.sessionLen === 0
-          ? 0
-          : state.sessionLen - 1
+        ? len === 60
+          ? 60
+          : len + 1
+        : len === 1
+          ? 1
+          : len - 1
+    })
+    this.setState(state => ({
+      timeLeft: state.sessionLen * 60
     }))
   }
-  clock = () => {
-
+  startStop = () => {
+    if (!this.state.countdown) {
+      const intervalID = setInterval(this.decrement, 1000)
+      this.setState(state => ({
+        countdown: !state.countdown,
+        intervalID: intervalID
+      }))
+    } else {
+      clearInterval(this.state.intervalID)
+      this.setState(state => ({
+        countdown: !state.countdown
+      }))
+    }
   }
+  reset = () => {
+    this.setState({
+      breakLen: 5,
+      sessionLen: 25,
+      timeLeft: 1500,
+      countdown: false,
+      breakSession: 'Session'
+    })
+    clearInterval(this.state.intervalID)
+  }
+
   render() {
     return (
       <div className='flex' id='app'>
@@ -86,7 +144,12 @@ class App extends React.Component {
           sLen={this.state.sessionLen}
           bLen={this.state.breakLen}
         />
-        <Session timeLeft={this.clock} />
+        <TimerPanel
+          timeLeft={this.format()}
+          startPause={this.startStop}
+          reset={this.reset}
+          stage={this.state.breakSession}
+        />
       </div>
     )
   }
