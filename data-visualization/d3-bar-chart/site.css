@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+html {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    background:
+        linear-gradient(217deg, rgba(217,31,255,0.8), rgba(0,0,0,0) 70.71%),
+        linear-gradient(127deg, rgba(127,31,255,0.8), rgba(0,0,0,0) 70.71%),
+        linear-gradient(336deg, rgba(172,31,255,0.8), rgba(0,0,0,0) 70.71%);
+}
+.flex {
+    display: flex;
+    /* border: solid black 1px; */
+}
+.spa {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+}
+#title {
+    text-align: center;
+    margin: 3rem;
+}
+.bar {
+    fill: aquamarine;
+    border: none;
+}
+.bar:hover {
+    fill: whitesmoke;
+}
