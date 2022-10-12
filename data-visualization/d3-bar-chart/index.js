@@ -18,7 +18,6 @@ d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
 
         const barWidth = chartWidth / data.length
         const maxGDP = d3.max(data, d => d[1])
-        const format = d3.timeFormat("%Y")
         const minYear = new Date(d3.min(data, d => d[0]))
         const maxYear = new Date(d3.max(data, d => d[0]))
 
@@ -44,7 +43,7 @@ d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
             .attr("height", (d) => chartHeight - padding - yScale(d[1]))
             .attr("data-date", d => d[0])
             .attr("data-gdp", d => d[1])
-            .on('mouseover', function (event, d) {
+            .on('mouseover', function () {
                 var dataDate = this.getAttribute('data-date')
                 tooltip
                     .attr('data-date', dataDate)
