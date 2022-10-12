@@ -1,6 +1,7 @@
 const chartWidth = 900
 const chartHeight = 500
 const padding = 50
+
 const svg = d3.select("#d3-container")
     .append("svg")
     .attr("width", chartWidth)
@@ -43,11 +44,15 @@ d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/mas
             .attr("height", (d) => chartHeight - padding - yScale(d[1]))
             .attr("data-date", d => d[0])
             .attr("data-gdp", d => d[1])
-            .on('mouseover', function () {
-                var dataDate = this.getAttribute('data-date')
+            .on('mouseover', function (e, datum) {
                 tooltip
-                    .attr('data-date', dataDate)
+                    .attr('data-date', datum[0])
                     .style('opacity', 1)
+                    .style('left', `${e.clientX + 30}px`)
+                    .style('bottom', '200px')
+                    .html(`Year: ${datum[0]}
+                           <br>
+                           GDP: ${datum[1]}`)
             })
             .on('mouseout', () => tooltip.style('opacity', 0))
 

@@ -31,3 +31,9 @@ html {
 .bar:hover {
     fill: whitesmoke;
 }
+#tooltip {
+    border: solid 1px black;
+    position: absolute;
+    background-color: whitesmoke;
+    padding: .5rem;
+}
