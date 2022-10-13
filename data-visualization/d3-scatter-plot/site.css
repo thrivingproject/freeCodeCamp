@@ -1,0 +1,71 @@
+/* ----------------------------------------------------------------------------
+                            Boilerplate Website Style
+---------------------------------------------------------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+}
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;  /* 1rem = 10pt, 1.6rem = 16pt, 7.2rem = 72pt */
+    scroll-behavior: smooth;
+}
+/* Links */
+a,
+a:hover,
+a:active {
+    color: black;
+    text-decoration: none;
+}
+/* list item style */
+ul {
+    list-style-position: inside;
+    list-style-type: none;
+}
+/* Flex */
+#spa {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+}
+/* Font */
+h1 {
+    font-size: 3.2rem;
+}
+h2 {
+    font-size: 2.4rem;
+}
+h3, th {
+    font-size: 1.8rem;
+}
+p, table {
+    font-size: 1.6rem;
+}
+/* Table */
+.table {
+    width: 100%;
+    padding: 0 10rem;
+    border-spacing: 0;
+  }
+.table th,
+.table td {
+    text-align: left;
+    padding: 1rem;
+}
+tbody tr:nth-child(odd) {
+    background-color: #cceeff;
+}
+
+/* ----------------------------------------------------------------------------
+                                    Custom
+---------------------------------------------------------------------------- */
+#plot-area {
+    border: solid black 1px;
+}
