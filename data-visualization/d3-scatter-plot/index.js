@@ -13,35 +13,39 @@ const tooltip = d3.select('#spa')
     .attr('id', 'tooltip')
     .style('opacity', 0)
 
+const parseYear = d3.timeParse("%Y")
+const parseTime = d3.timeParse('%M:%S')
+
+const xScale = d3.scaleTime().range([padding, chartWidth - padding])
+const yScale = d3.scaleTime().range([padding, chartHeight - padding])
+
+const xAxis = d3.axisBottom(xScale)
+const yAxis = d3.axisLeft(yScale)
+
 d3.json('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json')
     .then(data => {
-        
-        // console.log(yMin, yMax);
-        
-        const parseYear = d3.timeParse("%Y")
+        const parsedTimeData = data.map((d) => parseTime(d.Time))
         const xMin = parseYear(d3.min(data, datum => datum.Year) - 1)
-        const xMax = parseYear(d3.max(data, datum => datum.Year))
-        const xScale = d3.scaleTime()
-            .domain([xMin, xMax])
-            .range([padding, chartWidth - padding])
+        const xMax = parseYear(d3.max(data, datum => datum.Year) + 1)
 
-        const yScale = d3.scaleTime()
-            .domain(d3.extent(data, d => d.Time))
-            .range([padding, chartHeight - padding])
+        xScale.domain([xMin, xMax])
+        yScale.domain(d3.extent(parsedTimeData))
+        yAxis.tickFormat((d, i)=> data[i].Time)
 
         svg.selectAll('circle')
             .data(data)
             .enter()
             .append('circle')
+            .attr('cx', d => xScale(parseYear(d.Year)))
+            .attr('cy', d => yScale(parseTime(d.Time)))
+            .attr('r', '5px')
+            .attr('class', 'dot')
 
-        const xAxis = d3.axisBottom(xScale)
         svg.append('g')
             .attr('transform', `translate(0, ${chartHeight - padding})`)
             .attr('id', 'x-axis')
             .call(xAxis)
 
-        const timeFormat = d3.timeFormat('%M:%S')
-        const yAxis = d3.axisLeft(yScale).tickFormat(timeFormat)
         svg.append('g')
             .attr('transform', `translate(${padding}, 0)`)
             .attr('id', 'y-axis')
