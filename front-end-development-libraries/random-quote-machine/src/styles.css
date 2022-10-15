@@ -84,7 +84,7 @@ tbody tr:nth-child(odd) {
 /* Grid */
 div.gridcontainer {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
     grid-template-rows: 100vh;
     justify-items: stretch;
     align-items: center;
@@ -107,7 +107,7 @@ section.gridcontainer {
     grid-template-areas: 
     "text text text"
     "author author author"
-    "button . twitter";
+    "buttons buttons buttons";
 }
 #text {
     grid-area: text;
@@ -115,17 +115,18 @@ section.gridcontainer {
 #author {
     grid-area: author;
 }
-#new-quote {
-    grid-area: button;
+#buttons {
+    grid-area: buttons;
 }
 #tweet-quote {
-    grid-area: twitter;
     align-self: center;
     justify-self: center;
 }
-.author {
-    margin-top: 2rem;
-}
 button {
     padding: .5rem;
+    margin: 1rem 2rem;
+    width: 10rem;
+}
+#author {
+    align-self: start;
 }

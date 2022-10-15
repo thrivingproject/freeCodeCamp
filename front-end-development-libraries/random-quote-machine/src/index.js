@@ -4,21 +4,30 @@ import './styles.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-const Text = (props) => <p className='text'>{props.quote}</p>
+const Text = (props) => <p className='text' id="text">{props.quote}</p>
 
-const Author = (props) => <p className='author'>{props.author}</p>
+const Author = (props) => <p id='author' className='author'>{props.author}</p>
 
 const NewQuote = (props) => {
     return <button
+        id='new-quote'
         onClick={props.handler}
         className='button'>
         New Quote</button>
 }
 
+// function App(props) {
+
+// }
+
 class App extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {}
+        this.state = {
+            quotesArray: [],
+            quote: '',
+            author: ''
+        }
     }
 
     componentDidMount() {
@@ -44,10 +53,16 @@ class App extends React.Component {
         return (
             <div className='gridcontainer'>
                 <section id='quote-box' className='gridcontainer'>
-                    <div id='text'><Text quote={this.state.quote} /></div>
-                    <div id='author'><Author author={this.state.author} /></div>
-                    <div id='new-quote'><NewQuote handler={this.newQuote} /></div>
-                    <a id='tweet-quote' href='https://www.twitter.com/intent/tweet'><button>Tweet</button></a>
+                    <Text quote={this.state.quote} />
+                    <Author author={this.state.author} />
+                    <div id='buttons'>
+                        <NewQuote handler={this.newQuote} />
+                        <a
+                            id='tweet-quote'
+                            href='https://www.twitter.com/intent/tweet'>
+                            <button>Tweet</button>
+                        </a>
+                    </div>
                 </section>
             </div>
         );
