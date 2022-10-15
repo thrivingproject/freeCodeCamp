@@ -18,6 +18,7 @@ html {
     box-sizing: border-box;
     font-size: 62.5%;  /* 1rem = 10pt, 1.6rem = 16pt, 7.2rem = 72pt */
     scroll-behavior: smooth;
+    font-family: 'Poppins'!important;
 }
 
 /* Links */
@@ -94,11 +95,11 @@ div.gridcontainer {
 #quote-box {
     grid-area: quoteBox;
     border: solid white 1px;
-    padding: 1rem;
+    padding: 3rem;
     border-radius: 10px;
 }
 
-section.gridcontainer {
+#quote-box.gridcontainer {
     display: grid;
     align-items: center;
     justify-items: center;
@@ -108,6 +109,7 @@ section.gridcontainer {
     "text text text"
     "author author author"
     "buttons buttons buttons";
+    row-gap: 1rem;
 }
 #text {
     grid-area: text;
@@ -123,10 +125,21 @@ section.gridcontainer {
     justify-self: center;
 }
 button {
-    padding: .5rem;
-    margin: 1rem 2rem;
-    width: 10rem;
+    margin: 0 2rem 1rem;
+    width: 9rem;
+    height: 3.5rem;
+    font-family: 'Poppins';
+    font-size: 1.6rem;
+    border-radius: 5px;
+    border: none;
 }
-#author {
-    align-self: start;
+.text,
+.author {
+    font-size: 2rem;
+}
+button:hover {
+    background-color: rgb(0, 255, 255);
+}
+button:active {
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.4);
 }
