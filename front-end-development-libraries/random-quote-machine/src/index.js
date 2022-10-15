@@ -4,17 +4,19 @@ import './styles.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-class Text extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+// class Text extends React.Component {
+//   constructor(props) {
+//     super(props)
+//   }
 
-  render() {
-    return (
-      <p className='text'>{this.props.quote}</p>
-    )
-  }
-}
+//   render() {
+//     return (
+//       <p className='text'>{this.props.quote}</p>
+//     )
+//   }
+// }
+
+const Text = (props) => <p className='text'>{props.quote}</p>
 
 class Author extends React.Component {
   constructor(props) {
