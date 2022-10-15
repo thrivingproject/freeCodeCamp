@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles.css';
 
@@ -16,54 +16,98 @@ const NewQuote = (props) => {
         New Quote</button>
 }
 
-class App extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            quotesArray: [],
-            quote: '',
-            author: ''
-        }
-    }
-
-    componentDidMount() {
-        fetch('https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json')
-            .then(response => response.json())
-            .then(data => {
-                this.setState({
-                    quotesArray: data.quotes
-                })
-            })
-            .then(() => this.newQuote())
-    }
-
-    newQuote = () => {
+const App = () => {
+    const [state, setState] = useState({
+        quotesArray: [],
+        quote: '',
+        author: ''
+    })
+    const newQuote = () => {
         let r = Math.floor(Math.random() * 103)
-        this.setState((state) => ({
+        setState(state => ({
+            ...state,
             quote: state.quotesArray[r].quote,
             author: state.quotesArray[r].author
         }))
     }
+    useEffect(() => {
+        fetch('https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json')
+            .then(response => response.json())
+            .then(data => {
+                setState(state => ({
+                    ...state,
+                    quotesArray: data.quotes
+                }))
+            })
+            .then(() => newQuote())
+    }, [])
 
-    render() {
-        return (
-            <div className='gridcontainer'>
-                <section id='quote-box' className='gridcontainer'>
-                    <Text quote={this.state.quote} />
-                    <Author author={this.state.author} />
-                    <div id='buttons'>
-                        <NewQuote handler={this.newQuote} />
-                        <a
-                            id='tweet-quote'
-                            href='https://www.twitter.com/intent/tweet'>
-                            <button>Tweet</button>
-                        </a>
-                    </div>
-                </section>
-            </div>
-        );
-    }
+    return (
+        <div className='gridcontainer'>
+            <section id='quote-box' className='gridcontainer'>
+                <Text quote={state.quote} />
+                <Author author={state.author} />
+                <div id='buttons'>
+                    <NewQuote handler={newQuote} />
+                    <a
+                        id='tweet-quote'
+                        href='https://www.twitter.com/intent/tweet'>
+                        <button>Tweet</button>
+                    </a>
+                </div>
+            </section>
+        </div>
+    );
 }
+
+// class App extends React.Component {
+//     constructor(props) {
+//         super(props)
+//         this.state = {
+//             quotesArray: [],
+//             quote: '',
+//             author: ''
+//         }
+//     }
+
+//     componentDidMount() {
+//         fetch('https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json')
+//             .then(response => response.json())
+//             .then(data => {
+//                 this.setState({
+//                     quotesArray: data.quotes
+//                 })
+//             })
+//             .then(() => this.newQuote())
+//     }
+
+//     newQuote = () => {
+//         let r = Math.floor(Math.random() * 103)
+//         this.setState((state) => ({
+//             quote: state.quotesArray[r].quote,
+//             author: state.quotesArray[r].author
+//         }))
+//     }
+
+//     render() {
+//         return (
+//             <div className='gridcontainer'>
+//                 <section id='quote-box' className='gridcontainer'>
+//                     <Text quote={this.state.quote} />
+//                     <Author author={this.state.author} />
+//                     <div id='buttons'>
+//                         <NewQuote handler={this.newQuote} />
+//                         <a
+//                             id='tweet-quote'
+//                             href='https://www.twitter.com/intent/tweet'>
+//                             <button>Tweet</button>
+//                         </a>
+//                     </div>
+//                 </section>
+//             </div>
+//         );
+//     }
+// }
 
 root.render(
     <React.StrictMode>
