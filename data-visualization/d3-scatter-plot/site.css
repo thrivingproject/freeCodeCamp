@@ -69,3 +69,15 @@ tbody tr:nth-child(odd) {
 #plot-area {
     border: solid black 1px;
 }
+.dot {
+    fill: #fa1909ab;
+    stroke: #09eafa96;
+}
+#tooltip {
+    border: solid black 1px;
+    padding: 1rem;
+    background-color: #09eafa;
+    font-size: 2rem;
+    opacity: 0;
+    position: absolute;
+}
