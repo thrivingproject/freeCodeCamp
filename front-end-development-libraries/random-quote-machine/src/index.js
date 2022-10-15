@@ -16,10 +16,6 @@ const NewQuote = (props) => {
         New Quote</button>
 }
 
-// function App(props) {
-
-// }
-
 class App extends React.Component {
     constructor(props) {
         super(props)
