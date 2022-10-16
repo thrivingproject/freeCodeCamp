@@ -11,6 +11,7 @@ body {
     justify-content: center;
     height: 100vh;
     flex-direction: column;
+    min-width: 980px;
   }
   #d3 {
     border: solid black 1px;
