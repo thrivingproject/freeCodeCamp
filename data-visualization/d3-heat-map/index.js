@@ -12,16 +12,17 @@ const svg = d3.select('#d3')
 
 d3.json(url)
     .then(data => {
+        // Zero index months
         data.monthlyVariance.forEach(d => d.month -= 1)
-        console.log(data);
-        const base = data.baseTemperature
 
         // X-scale and x-axis
         const xScale = d3
-            .scaleLinear()
-            .domain([1753, 2015])
+            .scaleBand()
+            .domain(data.monthlyVariance.map(d => d.year))
             .range([paddingLeft, width - padding])
-        const xAxis = d3.axisBottom(xScale)
+        const xAxis = d3
+            .axisBottom(xScale)
+            .tickValues(xScale.domain().filter(year => year % 10 === 0))
         svg.append('g')
             .attr('id', 'x-axis')
             .call(xAxis)
@@ -34,7 +35,6 @@ d3.json(url)
             .rangeRound([padding, height - padding])
         const yAxis = d3
             .axisLeft(yScale)
-            .tickValues(yScale.domain())
             .tickFormat(month => {
                 let date = new Date(0)
                 date.setUTCMonth(month)
@@ -42,8 +42,8 @@ d3.json(url)
             })
         svg.append('g')
             .attr('id', 'y-axis')
-            .call(yAxis)
             .attr('transform', `translate(${paddingLeft}, 0)`)
+            .call(yAxis)
 
         // Graph
         svg.selectAll('rect')
@@ -53,10 +53,10 @@ d3.json(url)
             .attr('class', 'cell')
             .attr('data-month', d => d.month)
             .attr('data-year', d => d.year)
-            .attr('data-temp', d => base + d.variance)
+            .attr('data-temp', d => data.baseTemperature + d.variance)
             .attr('x', d => xScale(d.year))
             .attr('y', d => yScale(d.month))
-            .attr('width', width / (2015 - 1753))
+            .attr('width', d => xScale.bandwidth(d.year))
             .attr('height', d => yScale.bandwidth(d.month))
             .attr('fill', d => {
                 if (d.variance < -4.76) {return '#4575B4'}
