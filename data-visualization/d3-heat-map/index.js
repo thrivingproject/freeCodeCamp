@@ -20,8 +20,8 @@ fetch(url)
         // X-scale and x-axis
         const xScale = d3
             .scaleLinear()
-            .range([paddingLeft, width - padding])
             .domain([1753, 2015])
+            .range([paddingLeft, width - padding])
         const xAxis = d3.axisBottom(xScale)
         svg.append('g')
             .attr('id', 'x-axis')
@@ -35,6 +35,7 @@ fetch(url)
             .rangeRound([padding, height - padding])
         const yAxis = d3
             .axisLeft(yScale)
+            .tickValues(yScale.domain())
             .tickFormat(month => {
                 let date = new Date(0)
                 date.setUTCMonth(month)
