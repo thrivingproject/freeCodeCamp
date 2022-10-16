@@ -1,20 +1,59 @@
 const url = 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json'
 
 const paddingLeft = 100
-const padding = 30;
+const paddingBottom = 100
+const padding = 70;
 const height = 400;
 const width = 900;
 
-const svg = d3.select('#d3')
+const svg = d3
+    .select('#d3')
     .append('svg')
     .attr('width', width)
     .attr('height', height)
+    .attr('id', 'svg')
 
+// Legend
+const legendData = [2.8, 3.9, 5.0, 6.1, 7.2, 8.3, 9.5, 10.6, 11.7]
+const legendXScale = d3.scaleBand()
+    .domain(legendData)
+    .range([0, 200])
+const legendYScale = d3.scaleLinear().range([0, 30])
+const legendXAxis = d3.axisBottom(legendXScale)
+const legendYAxis = d3.axisLeft(legendYScale)
+
+const legend = svg
+    .append('g')
+    .attr('id', 'legend')
+    .attr('transform', `translate(${100}, ${height - padding})`)
+    .selectAll('rect')
+    .data(legendData)
+    .enter()
+    .append('rect')
+    .attr('x', d => legendXScale(d))
+    .attr('width', 200 / legendData.length)
+    .attr('height', 20)
+    .attr('fill', d => {
+        if (d <= 2.8) {return '#4575B4'}
+        else if (d < 3.9) {return '#74ADD1'}
+        else if (d < 5.0) {return '#74ADD1'}
+        else if (d < 6.1) {return '#ABD9E9'}
+        else if (d < 7.2) {return '#E0F3F8'}
+        else if (d < 8.3) {return '#FFFFBF'}
+        else if (d < 9.5) {return '#FEE090'}
+        else if (d < 10.6) {return '#FDAE61'}
+        else if (d < 11.7) {return '#F46D43'}
+        else {return '#D73027'}
+    })
+
+d3.select('#legend')
+    .append('g')
+    .call(legendXAxis)
+    .attr('transform', `translate(0, 20)`)
+
+// Main
 d3.json(url)
     .then(data => {
-        // Zero index months
-        data.monthlyVariance.forEach(d => d.month -= 1)
-
         // X-scale and x-axis
         const xScale = d3
             .scaleBand()
@@ -26,13 +65,13 @@ d3.json(url)
         svg.append('g')
             .attr('id', 'x-axis')
             .call(xAxis)
-            .attr('transform', `translate(0, ${height - padding})`)
+            .attr('transform', `translate(0, ${height - paddingBottom})`)
 
         // Y-scale and y-axis
         const yScale = d3
             .scaleBand()
-            .domain([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
-            .rangeRound([padding, height - padding])
+            .domain(data.monthlyVariance.map(d => d.month))
+            .rangeRound([0, height - paddingBottom])
         const yAxis = d3
             .axisLeft(yScale)
             .tickFormat(month => {
@@ -51,7 +90,7 @@ d3.json(url)
             .enter()
             .append('rect')
             .attr('class', 'cell')
-            .attr('data-month', d => d.month)
+            .attr('data-month', d => d.month - 1)
             .attr('data-year', d => d.year)
             .attr('data-temp', d => data.baseTemperature + d.variance)
             .attr('x', d => xScale(d.year))

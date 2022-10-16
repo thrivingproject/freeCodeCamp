@@ -14,10 +14,16 @@ body {
     min-width: 980px;
   }
   #d3 {
-    border: solid black 1px;
     width: 900px;
     height: 400px;
   }
   h1, h2 {
     padding-bottom: 1rem;
+  }
+  .cell:hover{
+    stroke: black;
+  }
+  #legend {
+    align-self: start;
+    padding-left: 3rem;
   }
