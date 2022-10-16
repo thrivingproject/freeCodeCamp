@@ -12,10 +12,6 @@ const tooltip = d3.select('#d3-container')
     .append('div')
     .attr('id', 'tooltip')
 
-// const legend = d3.select('#spa')
-//     .append('div')
-//     .attr('id', 'legend')
-    
 const parseYear = d3.timeParse("%Y")
 
 const xScale = d3.scaleTime()
