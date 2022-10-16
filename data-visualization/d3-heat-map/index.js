@@ -10,12 +10,11 @@ const svg = d3.select('#d3')
     .attr('width', width)
     .attr('height', height)
 
-fetch(url)
-    .then(response => response.json())
+d3.json(url)
     .then(data => {
+        data.monthlyVariance.forEach(d => d.month -= 1)
+        console.log(data);
         const base = data.baseTemperature
-        const variance = data.monthlyVariance
-        variance.forEach(d => d.month -= 1)
 
         // X-scale and x-axis
         const xScale = d3
@@ -48,7 +47,7 @@ fetch(url)
 
         // Graph
         svg.selectAll('rect')
-            .data(variance)
+            .data(data.monthlyVariance)
             .enter()
             .append('rect')
             .attr('class', 'cell')
