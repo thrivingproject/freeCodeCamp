@@ -27,3 +27,10 @@ body {
     align-self: start;
     padding-left: 3rem;
   }
+  #tooltip {
+    opacity: 0;
+    position: absolute;
+    background-color: rgb(255, 129, 240);
+    padding: .5rem;
+    font-size: .75rem;
+  }

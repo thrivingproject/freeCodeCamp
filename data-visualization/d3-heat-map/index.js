@@ -13,16 +13,20 @@ const svg = d3
     .attr('height', height)
     .attr('id', 'svg')
 
+// Toolip
+const tooltip = d3
+    .select('#d3')
+    .append('div')
+    .attr('id', 'tooltip')
+
 // Legend
 const legendData = [2.8, 3.9, 5.0, 6.1, 7.2, 8.3, 9.5, 10.6, 11.7]
-const legendXScale = d3.scaleBand()
-    .domain(legendData)
-    .range([0, 200])
+const legendXScale = d3.scaleBand().domain(legendData).range([0, 200])
 const legendYScale = d3.scaleLinear().range([0, 30])
 const legendXAxis = d3.axisBottom(legendXScale)
 const legendYAxis = d3.axisLeft(legendYScale)
 
-const legend = svg
+svg
     .append('g')
     .attr('id', 'legend')
     .attr('transform', `translate(${100}, ${height - padding})`)
@@ -34,16 +38,16 @@ const legend = svg
     .attr('width', 200 / legendData.length)
     .attr('height', 20)
     .attr('fill', d => {
-        if (d <= 2.8) {return '#4575B4'}
-        else if (d < 3.9) {return '#74ADD1'}
-        else if (d < 5.0) {return '#74ADD1'}
-        else if (d < 6.1) {return '#ABD9E9'}
-        else if (d < 7.2) {return '#E0F3F8'}
-        else if (d < 8.3) {return '#FFFFBF'}
-        else if (d < 9.5) {return '#FEE090'}
-        else if (d < 10.6) {return '#FDAE61'}
-        else if (d < 11.7) {return '#F46D43'}
-        else {return '#D73027'}
+        if (d <= 2.8) { return '#4575B4' }
+        else if (d < 3.9) { return '#74ADD1' }
+        else if (d < 5.0) { return '#74ADD1' }
+        else if (d < 6.1) { return '#ABD9E9' }
+        else if (d < 7.2) { return '#E0F3F8' }
+        else if (d < 8.3) { return '#FFFFBF' }
+        else if (d < 9.5) { return '#FEE090' }
+        else if (d < 10.6) { return '#FDAE61' }
+        else if (d < 11.7) { return '#F46D43' }
+        else { return '#D73027' }
     })
 
 d3.select('#legend')
@@ -98,15 +102,24 @@ d3.json(url)
             .attr('width', d => xScale.bandwidth(d.year))
             .attr('height', d => yScale.bandwidth(d.month))
             .attr('fill', d => {
-                if (d.variance < -4.76) {return '#4575B4'}
-                else if (d.variance < -3.66) {return '#74ADD1'}
-                else if (d.variance < -2.56) {return '#ABD9E9'}
-                else if (d.variance < -1.46) {return '#E0F3F8'}
-                else if (d.variance < -.36) {return '#FFFFBF'}
-                else if (d.variance < .84) {return '#FEE090'}
-                else if (d.variance < 1.94) {return '#FDAE61'}
-                else if (d.variance < 3.04) {return '#F46D43'}
-                else {return '#D73027'}
+                if (d.variance < -4.76) { return '#4575B4' }
+                else if (d.variance < -3.66) { return '#74ADD1' }
+                else if (d.variance < -2.56) { return '#ABD9E9' }
+                else if (d.variance < -1.46) { return '#E0F3F8' }
+                else if (d.variance < -.36) { return '#FFFFBF' }
+                else if (d.variance < .84) { return '#FEE090' }
+                else if (d.variance < 1.94) { return '#FDAE61' }
+                else if (d.variance < 3.04) { return '#F46D43' }
+                else { return '#D73027' }
             })
+            .on('mouseover', (e, d) => {
+                tooltip
+                    .style('opacity', 1)
+                    .style('left', `${e.clientX + 30}px`)
+                    .style('top', `${e.clientY - 30}px`)
+                    .attr('data-year', d.year)
+                    .html(`Year: ${d.year}`)
+            })
+            .on('mouseout', () => tooltip.style('opacity', 0))
     })
 
