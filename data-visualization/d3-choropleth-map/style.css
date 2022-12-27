@@ -13,3 +13,6 @@ body {
     height: 100vh;
     row-gap: 1rem;
 }
+#description {
+    margin-bottom: 2rem;
+}
